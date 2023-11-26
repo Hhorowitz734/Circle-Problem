@@ -2,6 +2,7 @@
 #define ENCLOSURE_H
 
 #include "/opt/homebrew/Cellar/raylib/4.5.0/include/raylib.h"
+#include <cmath>
 
 class Enclosure {
     
@@ -38,6 +39,14 @@ class Enclosure {
             return horizontal_max * vertical_max;
 
         }
+
+        /**
+         * Computes the maximum number of circles of a given radius that can fit within the enclosed space.
+         * 
+         * @param radius The radius of the circles.
+         * @return The maximum number of circles that can fit within the enclosed space if circles could be reshaped.
+         */
+        int getMaxTheoreticalFit(double radius){ return area / (PI * radius * radius); }
 
 };
 
