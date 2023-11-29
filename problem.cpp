@@ -21,10 +21,12 @@ int main()
 
     Enclosure* test = new Enclosure;
 
-    Slider test_slider = Slider::CreateSlider(950, 200, 300, 20, 0, 100);
+    Slider test_slider = Slider::CreateSlider(950, 200, 300, 20, 80, 100);
 
-    double circle_r = 5.0;
-    double old_r = 5.0;
+    double circle_r = 80.0;
+    double old_r = 80.0;
+
+    CircleFactory::generateCircles(test, circle_r);
 
     // Main game loop
     while (!WindowShouldClose())
@@ -35,9 +37,13 @@ int main()
 
         circle_r = test_slider.value;
 
+        std::cout << old_r << ' ' << circle_r << '\n';
+
         if (old_r != circle_r) {
-            test->clearEnclosure();
-            CircleFactory::generateCircles(test, circle_r);
+            //test->clearEnclosure();
+            for (Circle* circle : CircleFactory::circles){
+                circle->contractCircle(circle_r);
+            }
             
             std::string real_fit = "Max Real Fit: " + std::to_string(test->getMaxFit(circle_r));
             std::string ideal_fit = "Max Ideal Fit: " + std::to_string(test->getMaxTheoreticalFit(circle_r));

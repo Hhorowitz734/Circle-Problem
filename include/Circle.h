@@ -20,6 +20,8 @@ class Circle{
 
         //Visualization
         void drawCircle() { DrawCircleLines(xpos, ypos, radius, WHITE); }
+        void eraseCircle() { DrawCircle(xpos, ypos, radius + .5, BLACK); }
+        void contractCircle(double newRadius);
 
         //Destructor
         ~Circle() {};
