@@ -1,12 +1,13 @@
 #include "include/Circle.h"
 #include "include/Enclosure.h"
 #include "include/CircleFactory.h"
+#include "include/Slider.h"
 
 #include <string>
+#include <iostream>
 
 
-//RUN THIS CODE WITH cd "/Users/bhorowitz/Documents/CPLUSPLUS/CircleAreaProblem/" && g++ problem.cpp -o problem -I/opt/homebrew/Cellar/raylib/4.5.0/include -L/opt/homebrew/lib -lraylib -std=c++11 && "/Users/bhorowitz/Documents/CPLUSPLUS/CircleAreaProblem/problem"
-
+//RUN THIS CODE WITH g++ /Users/bhorowitz/Documents/CPLUSPLUS/CircleAreaProblem/problem.cpp /Users/bhorowitz/Documents/CPLUSPLUS/CircleAreaProblem/src/*.cpp -o problem -I/opt/homebrew/Cellar/raylib/4.5.0/include -L/opt/homebrew/lib -lraylib -std=c++11 && /Users/bhorowitz/Documents/CPLUSPLUS/CircleAreaProblem/problem
 
 int main()
 {
@@ -20,14 +21,32 @@ int main()
 
     Enclosure* test = new Enclosure;
 
-    
+    Slider test_slider = Slider::CreateSlider(950, 200, 300, 20, 0, 100);
+
+    double circle_r = 5.0;
+    double old_r = 5.0;
 
     // Main game loop
     while (!WindowShouldClose())
-    {
+    {   
 
-        std::string real_fit = "Max Real Fit: " + std::to_string(test->getMaxFit(17));
-        std::string ideal_fit = "Max Ideal Fit: " + std::to_string(test->getMaxTheoreticalFit(17));
+        test_slider.updateSlider();
+        test_slider.drawSlider();
+
+        circle_r = test_slider.value;
+
+        if (old_r != circle_r) {
+            test->clearEnclosure();
+            CircleFactory::generateCircles(test, circle_r);
+            
+            std::string real_fit = "Max Real Fit: " + std::to_string(test->getMaxFit(circle_r));
+            std::string ideal_fit = "Max Ideal Fit: " + std::to_string(test->getMaxTheoreticalFit(circle_r));
+
+            old_r = circle_r; 
+        }
+
+        std::string real_fit = "Max Real Fit: " + std::to_string(test->getMaxFit(circle_r));
+        std::string ideal_fit = "Max Ideal Fit: " + std::to_string(test->getMaxTheoreticalFit(circle_r));
 
         DrawText(real_fit.c_str(), 10, 10, 30, GREEN);
         DrawText(ideal_fit.c_str(), 10, 50, 30, YELLOW);
@@ -36,8 +55,7 @@ int main()
 
         BeginDrawing();
 
-        test->drawEnclosure();
-        CircleFactory::generateCircles(test, 17);
+
 
 
         EndDrawing();

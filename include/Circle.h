@@ -4,7 +4,7 @@
 #include "/opt/homebrew/Cellar/raylib/4.5.0/include/raylib.h"
 #include <cmath>
 
-class Circle {
+class Circle{
 
     public:
         
@@ -21,6 +21,8 @@ class Circle {
         //Visualization
         void drawCircle() { DrawCircleLines(xpos, ypos, radius, WHITE); }
 
+        //Destructor
+        ~Circle() {};
 };
 
 #endif

@@ -14,6 +14,12 @@ class CircleFactory{
 
         static void generateCircles(Enclosure* enclosure, double radius);
 
+        ~CircleFactory(){
+            for (Circle* circle : CircleFactory::circles){
+                delete circle;
+            }
+            circles.clear();
+        };
 };
 
 int CircleFactory::count = 0;

@@ -22,6 +22,7 @@ class Enclosure {
 
         //Visualizing functions
         void drawEnclosure(){ DrawRectangleLines( xpos, ypos, width, height, WHITE ); }
+        void clearEnclosure(){ DrawRectangle(xpos, ypos, width - 1.5, height - 1.5, BLACK); }
 
         //Calculations
 
